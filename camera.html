@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📷 محاكي الكاميرا</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='camera.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>📷 محاكي الكاميرا - تتبع A</h1>
+    <p>انقر على النقطة حيث مرّ A عند كل عمود</p>
+</header>
+
+<div class="main-container">
+
+    <!-- ==================== الكاميرا ==================== -->
+    <div class="camera-area">
+        <div class="camera-view" id="cameraView">
+            <canvas id="gridCanvas"></canvas>
+            <div class="columns-overlay" id="columnsOverlay"></div>
+        </div>
+
+        <div class="current-reading" id="currentReading">
+            <span class="reading-label">القراءة الحالية:</span>
+            <span class="reading-value" id="readingValue">لم يتم النقر بعد</span>
+        </div>
+    </div>
+
+    <!-- ==================== لوحة التحكم ==================== -->
+    <div class="control-panel">
+
+        <!-- القراءات -->
+        <div class="readings-section">
+            <h2>📊 القراءات المسجلة</h2>
+
+            <div class="reading-row" data-point="D1">
+                <div class="point-badge d1">D1</div>
+                <div class="reading-details">
+                    <span class="angle-display">—</span>
+                    <span class="time-display">—</span>
+                </div>
+                <button class="btn-clear" onclick="clearReading('D1')">✕</button>
+            </div>
+
+            <div class="reading-row" data-point="D2">
+                <div class="point-badge d2">D2</div>
+                <div class="reading-details">
+                    <span class="angle-display">—</span>
+                    <span class="time-display">—</span>
+                </div>
+                <button class="btn-clear" onclick="clearReading('D2')">✕</button>
+            </div>
+
+            <div class="reading-row" data-point="D3">
+                <div class="point-badge d3">D3</div>
+                <div class="reading-details">
+                    <span class="angle-display">—</span>
+                    <span class="time-display">—</span>
+                </div>
+                <button class="btn-clear" onclick="clearReading('D3')">✕</button>
+            </div>
+        </div>
+
+        <!-- الإعدادات -->
+        <div class="settings-section">
+            <h2>⚙️ الإعدادات</h2>
+
+            <label>
+                📏 المسافة بين D1 و D3 (م):
+                <input type="number" id="distance" value="10" min="1" step="1">
+            </label>
+
+            <label>
+                ⏱️ الفارق الزمني (ث):
+                <input type="number" id="dt" value="1" min="0.1" step="0.1">
+            </label>
+        </div>
+
+        <!-- الأزرار -->
+        <div class="buttons-section">
+            <button class="btn-analyze" onclick="analyzeJourney()" id="analyzeBtn" disabled>
+                🎯 تحليل المسار
+            </button>
+
+            <button class="btn-reset" onclick="resetAll()">
+                🔄 إعادة تعيين
+            </button>
+
+            <button class="btn-example" onclick="loadExample()">
+                📋 مثال جاهز
+            </button>
+        </div>
+
+        <!-- الحالة -->
+        <div class="status-message" id="statusMessage"></div>
+    </div>
+</div>
+
+<!-- ==================== نافذة النتائج ==================== -->
+<div class="modal-overlay" id="resultsModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h2>📊 نتائج التحليل</h2>
+        <div id="resultsContent"></div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='camera.js') }}"></script>
+</body>
+  </html>
